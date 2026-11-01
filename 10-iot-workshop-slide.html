@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hands-on Workshop — ESP32 IoT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:#eaf3fa;font-family:Prompt,"Leelawadee UI",Tahoma,sans-serif;color:#123b60}
+.slide{width:min(100vw,177.7778vh);height:min(100vh,56.25vw);aspect-ratio:16/9;margin:auto;position:relative;overflow:hidden;background:#f7fbff;font-size:1cqw;container-type:inline-size}
+.top{height:18.5%;display:grid;grid-template-columns:8.5% 34% 1px 26% 18% 13.5%;align-items:center;padding:0 1%;color:white;background:linear-gradient(105deg,#05274d,#063763 66%,#0573a2);position:relative;overflow:hidden;border-bottom:.12cqw solid #18b9e8}
+.top:after{content:"";position:absolute;inset:0;background:linear-gradient(112deg,transparent 0 75%,#00b7e52c 75.2% 75.7%,transparent 76%),linear-gradient(90deg,transparent 65%,#062d5366);pointer-events:none}
+.badge{height:78%;width:96%;display:grid;place-items:center;background:linear-gradient(135deg,#08c6c5,#0875dd);border-radius:1.05em .85em 1.05em .45em;transform:skew(-12deg);box-shadow:0 0 1.5em #00ace866;position:relative;z-index:1}.badge span{font-size:3.35cqw;font-weight:700;line-height:1;transform:skew(12deg)}
+.heading{padding-left:.5cqw;line-height:1.08;position:relative;z-index:1}.heading h1{font-size:2.65cqw;white-space:nowrap;margin:0 0 .23em;font-weight:700;letter-spacing:-.035em}.heading h1 b{color:#43d5eb}.heading p{font-size:1.46cqw;font-weight:600;margin:0 0 .16em;white-space:nowrap}.heading .sub{font-size:1.28cqw;margin:0}
+.rule{height:72%;background:#20c6ed;transform:skew(-12deg);position:relative;z-index:1}.goals{font-size:.78cqw;line-height:1.42;padding:0 .4cqw 0 1.2cqw;position:relative;z-index:1;color:#e9faff;min-width:0;overflow:hidden}.goals h2{font-size:1.08cqw;margin:0 0 .28cqw;color:#55d7ee;white-space:nowrap}.goals ul{padding:0;margin:0;list-style:none}.goals li{margin:.14cqw 0;white-space:nowrap}.goals li:before{content:"✓";color:#1be0a6;font-weight:700;margin-right:.35cqw}.quote{font-size:1.02cqw;line-height:1.48;color:#48d4eb;text-align:center;font-weight:600;position:relative;z-index:1;padding:0 .35cqw;min-width:0;overflow:hidden}.hero{height:100%;min-width:0;overflow:hidden;background-image:url('assets/workshop-header.png'),linear-gradient(105deg,#063763,#05274d);background-position:center;background-size:cover;background-repeat:no-repeat;position:relative;z-index:1}
+.main{height:72.9%;padding:1.15% .9% .82%;display:grid;grid-template-rows:48.6% 49.5%;gap:1.9%;background:linear-gradient(180deg,#fff,#eff8ff)}
+.upper{display:grid;grid-template-columns:.72fr 1.53fr 1.08fr;gap:.72%;min-height:0}
+.lower{display:grid;grid-template-columns:1.32fr .82fr .76fr;gap:.72%;min-height:0}
+.panel{--c:#0875d1;--p:#eaf7ff;--b:#94d8ff;border:.1cqw solid var(--b);border-radius:.7cqw;background:linear-gradient(145deg,#f7fcff,#e9f6ff);position:relative;min-width:0;min-height:0;overflow:hidden;padding:.55cqw .62cqw .48cqw;box-shadow:0 .12cqw .4cqw #0b508713}
+.panel.green{--c:#00a184;--p:#e8faf5;--b:#8bdfcc}.panel.purple{--c:#6746c6;--p:#f0edff;--b:#cbbfff}.panel.pink{--c:#dc376d;--p:#fff0f5;--b:#f2a8bf}
+.panel-title{position:absolute;left:0;top:0;height:2.55cqw;max-width:96%;display:flex;align-items:center;gap:.45cqw;padding:.2cqw .7cqw .2cqw .36cqw;color:white;background:linear-gradient(105deg,var(--c),color-mix(in srgb,var(--c),white 10%));border-radius:0 1.35cqw 1.35cqw 0;z-index:2;white-space:nowrap;font-size:.98cqw;font-weight:700}
+.stepbadge{width:2.4cqw;height:2.4cqw;border-radius:50%;display:grid;place-items:center;background:#ffffff29;border:.15cqw solid #ffffff88;box-shadow:inset 0 0 0 .18cqw #052f5933;font-size:1.55cqw;flex:none}
+.equipment-grid{height:calc(100% - 2.65cqw);margin-top:2.55cqw;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:.15cqw .32cqw}
+.equipment{min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#123e62;padding:.1cqw}.equipment svg{width:88%;height:68%;display:block}.equipment strong{font-size:.8cqw;line-height:1.1;margin-top:.05cqw}.equipment small{font-size:.57cqw;line-height:1.18;margin-top:.12cqw}
+.architecture{margin-top:2.58cqw;height:calc(100% - 2.58cqw);display:flex;flex-direction:column;padding:.25cqw .5cqw .4cqw;background:linear-gradient(145deg,#f4fcff,#def9fa)}
+.pipeline{height:70%;display:grid;grid-template-columns:1fr .19fr 1fr .19fr 1fr .19fr 1fr .19fr 1fr;align-items:center;gap:.06cqw;min-height:0}
+.node{height:100%;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:.05cqw}.node svg{width:90%;height:45%;max-height:4.25cqw}.node strong{font-size:.77cqw;line-height:1.08;margin:.08cqw 0}.node small{font-size:.57cqw;line-height:1.2}.arrow{font-size:1.6cqw;color:#0587c8;font-weight:700;text-align:center}
+.flowrow{height:25%;display:grid;grid-template-columns:1fr 1fr;gap:.55cqw;align-items:center;padding:0 .3cqw}.flow{height:65%;display:grid;place-items:center;clip-path:polygon(0 50%,5% 0,95% 0,100% 50%,95% 100%,5% 100%);background:linear-gradient(90deg,#08a44c,#08a9d7);color:white;text-align:center;font-size:.68cqw;font-weight:600;padding:0 .45cqw}.flow.sub{background:linear-gradient(90deg,#0769c7,#07a8dc)}
+.dashboard{margin-top:2.65cqw;height:calc(100% - 2.65cqw);background:#061f39;border:.22cqw solid #092945;border-radius:.55cqw;padding:.38cqw;display:grid;grid-template-rows:10% 1fr 1fr;gap:.32cqw;color:white;box-shadow:inset 0 0 0 .08cqw #28719c}
+.dashbar{display:flex;justify-content:space-between;align-items:center;padding:0 .4cqw;font-size:.65cqw;font-weight:600}.online{border-radius:1cqw;background:#02a879;color:white;padding:.1cqw .38cqw;font-size:.48cqw}
+.dashrow{display:grid;grid-template-columns:.78fr .78fr 1.6fr;gap:.28cqw;min-height:0}.metric,.chart,.alerts,.table{border:.08cqw solid #153c58;border-radius:.38cqw;background:linear-gradient(145deg,#0c2d4a,#071a2e);padding:.3cqw;min-width:0;min-height:0;position:relative;overflow:hidden}
+.metric{text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}.metric label{font-size:.52cqw}.gauge{width:5.1cqw;height:3.15cqw;border-radius:5.1cqw 5.1cqw 0 0;border:.58cqw solid #16bf93;border-bottom:0;position:relative;margin:.25cqw auto .05cqw}.gauge:after{content:"";position:absolute;bottom:.05cqw;left:50%;width:.12cqw;height:1.42cqw;background:#ff5b64;transform-origin:bottom;transform:rotate(31deg)}.gauge.blue{border-color:#12a8e3}.reading{position:absolute;bottom:.1cqw;left:0;right:0;font-size:1.08cqw;font-weight:700}.reading small{font-size:.48cqw}
+.chart h4,.alerts h4,.table h4{font-size:.58cqw;margin:0 0 .18cqw}.chart svg{width:100%;height:78%}.chart text{fill:#a5c3d9;font:7px Prompt,sans-serif}.dashbottom{display:grid;grid-template-columns:1fr 1fr;gap:.28cqw;min-height:0}.alertbox{background:#762445;border-radius:.25cqw;padding:.32cqw;font-size:.48cqw;line-height:1.35;color:#ffe6ed;margin-top:.25cqw}.alertbox b{display:block;color:white;font-size:.53cqw;margin-bottom:.16cqw}.table{font-size:.43cqw}.table h4{color:#d7f4ff}.tablerow{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:.04cqw solid #31536a;padding:.1cqw 0;color:#bed4e6}
+.codepanel{background:linear-gradient(145deg,#effaff,#e2f7ff)}.codecontent{height:calc(100% - 2.65cqw);margin-top:2.55cqw;display:grid;grid-template-columns:1.4fr .94fr;gap:.48cqw;min-height:0}
+.code{margin:0;min-width:0;min-height:0;overflow:hidden;border-radius:.48cqw;background:linear-gradient(145deg,#061d35,#092e4d);color:#d5edfc;padding:.58cqw .68cqw;font: .55cqw/1.38 Consolas,"Cascadia Code",monospace;white-space:pre-wrap;box-shadow:inset 0 0 0 .08cqw #317ba5}
+.code .inc{color:#19d1ce}.code .kw{color:#56baff}.code .str{color:#ffb76b}.code .cm{color:#8fb7ce}
+.codeinfo{min-width:0;display:grid;grid-template-rows:19% 40% 1fr;gap:.32cqw}.infobox{min-height:0;background:#ffffffc9;border-radius:.42cqw;padding:.32cqw .45cqw;color:#18486d;overflow:hidden}.infobox h3{font-size:.68cqw;color:#4b38a5;margin:0 0 .15cqw}.infobox p{font-size:.58cqw;line-height:1.25;margin:0}.payload{font: .53cqw/1.35 Consolas,monospace;background:#edf7ff;border-radius:.3cqw;padding:.22cqw .4cqw;margin-top:.15cqw;color:#173e62;white-space:pre}
+.note h3{color:#0879b7}.note ul{padding-left:.9cqw;margin:.12cqw 0 0}.note li{font-size:.56cqw;line-height:1.35;margin:.08cqw 0}
+.worksteps{height:calc(100% - 2.65cqw);margin-top:2.55cqw;display:grid;grid-template-rows:repeat(6,minmax(0,1fr));gap:.12cqw}
+.workrow{display:grid;grid-template-columns:1.45cqw 1.25cqw 2.2cqw 1fr;gap:.23cqw;align-items:center;min-height:0;background:#ffffffb7;border-radius:.42cqw;padding:.1cqw .24cqw}
+.worknum{width:1.52cqw;height:1.52cqw;border-radius:50%;display:grid;place-items:center;background:linear-gradient(140deg,#056395,#0876b4);color:white;font-size:.92cqw;font-weight:700}
+.workarrow{font-size:1cqw;color:#0aa7d7;text-align:center}.workicon{width:2.1cqw;height:2.1cqw;border-radius:.35cqw;background:#087e9b;color:white;display:grid;place-items:center;font-size:1.15cqw}.worktext{font-size:.57cqw;line-height:1.22;color:#17486a}.worktext b{display:block;font-size:.64cqw;color:#075b8a;margin-bottom:.08cqw}
+.results{background:linear-gradient(145deg,#fff9fb,#fff0f5)}.resultbody{height:calc(100% - 2.65cqw);margin-top:2.55cqw;display:grid;grid-template-rows:1.08fr .92fr;gap:.38cqw}
+.resultlist{list-style:none;margin:0;padding:.12cqw .18cqw;display:grid;grid-template-rows:repeat(5,minmax(0,1fr));gap:.05cqw}.resultlist li{display:flex;align-items:center;gap:.35cqw;font-size:.63cqw;line-height:1.18}.resultlist .check{width:1cqw;height:1cqw;border-radius:50%;background:#08a567;color:white;display:grid;place-items:center;flex:none;font-size:.62cqw;font-weight:700}
+.growth{background:linear-gradient(110deg,#fff0f6,#ffe6f0);border-radius:.48cqw;padding:.38cqw .48cqw;display:grid;grid-template-columns:1fr 5cqw;min-height:0;overflow:hidden}.growth h3{font-size:.7cqw;color:#bd285b;margin:0 0 .15cqw}.growth ul{margin:.12cqw 0 0;padding-left:.9cqw}.growth li{font-size:.55cqw;line-height:1.3;margin:.08cqw 0}.plant{align-self:center;justify-self:center;width:4.7cqw;height:5.5cqw}.plant svg{width:100%;height:100%}
+.footer{height:8.6%;background:linear-gradient(100deg,#04264c,#06345f 66%,#042447);color:white;display:grid;grid-template-columns:29% 1fr 20%;align-items:center;padding:0 1.4%;position:relative;border-top:.15cqw solid #17bce4;gap:.6cqw}
+.takeaway{display:flex;align-items:center;gap:.55cqw;font-size:.77cqw;line-height:1.3;font-weight:600;color:#d9f8ff}.takeicon{width:3.1cqw;height:3.1cqw;border-radius:50%;display:grid;place-items:center;background:linear-gradient(140deg,#17d5ce,#0995d7);font-size:1.7cqw;flex:none}
+.journey{display:flex;align-items:center;justify-content:space-around;min-width:0}.journeyitem{display:flex;align-items:center;gap:.25cqw;font-size:.55cqw;line-height:1.1;white-space:nowrap}.journeyitem i{font-style:normal;color:#22d2e5;font-size:1.28cqw}.journeyitem b{display:block;color:white;font-size:.61cqw}.journeyarrow{color:#0ac2dc;font-size:.8cqw}
+.tagline{font-size:.73cqw;color:#47d4e8;font-weight:600;font-style:italic;text-align:right;white-space:nowrap}
+@media(max-aspect-ratio:16/9){.slide{width:100vw;height:56.25vw}}
+</style>
+</head>
+<body>
+<main class="slide">
+ <header class="top">
+  <div class="badge"><span>10</span></div>
+  <div class="heading"><h1>Hands-on <b>Workshop</b></h1><p>โครงงานตรวจวัดอุณหภูมิด้วย ESP32</p><p class="sub">ส่งข้อมูลผ่าน MQTT และแสดงผลบน Dashboard</p></div>
+  <div class="rule"></div>
+  <section class="goals"><h2>◎ เป้าหมายของ Workshop</h2><ul><li>อ่านค่าจาก Sensor ได้</li><li>ส่งข้อมูลผ่าน MQTT ไปยัง Broker</li><li>แสดงผลบน Dashboard แบบ Real-time</li><li>ตั้งเงื่อนไขแจ้งเตือนเมื่อค่าเกินกำหนด</li><li>อธิบายเส้นทางการไหลของข้อมูลในระบบได้</li></ul></section>
+  <div class="quote">“เรียนรู้จากการลงมือทำ<br>เข้าใจทั้งอุปกรณ์ เครือข่าย<br>และการจัดการข้อมูลจริง”</div>
+  <div class="hero" aria-hidden="true"></div>
+ </header>
+ <section class="main">
+  <div class="upper">
+   <section class="panel"><div class="panel-title"><span class="stepbadge">1</span>อุปกรณ์ที่ใช้</div>
+    <div class="equipment-grid">
+     <div class="equipment"><svg viewBox="0 0 120 86" role="img" aria-label="ESP32 microcontroller board"><g stroke="#101a28" stroke-width="3" stroke-linejoin="round"><path d="m12 31 65-24 36 19-66 29z" fill="#172a3c"/><path d="m19 31 57-21 28 15-57 22z" fill="#62717d"/><path d="m28 30 38-14 19 10-38 14z" fill="#a7b4bd"/><path d="m36 38 31-11 16 8-31 12z" fill="#263847"/><path d="M17 29 8 40l4 8 7-2m90-21 6 6-3 5" fill="none"/><circle cx="26" cy="33" r="2" fill="#e9c55e"/><circle cx="91" cy="27" r="2" fill="#e9c55e"/></g><g fill="#d3e2eb"><circle cx="22" cy="26" r="2"/><circle cx="30" cy="23" r="2"/><circle cx="38" cy="20" r="2"/><circle cx="46" cy="17" r="2"/><circle cx="54" cy="14" r="2"/><circle cx="63" cy="11" r="2"/><circle cx="79" cy="48" r="2"/><circle cx="87" cy="45" r="2"/><circle cx="95" cy="42" r="2"/></g></svg><strong>ESP32</strong><small>(Microcontroller + Wi‑Fi)</small></div>
+     <div class="equipment"><svg viewBox="0 0 120 86" role="img" aria-label="DHT22 temperature and humidity sensor"><path d="M29 14q31-7 61 0l-7 43q-23 10-47 0z" fill="#fff" stroke="#d9e0e4" stroke-width="3"/><path d="M34 21h51m-49 7h46m-45 7h44m-42 7h40m-37 7h34" stroke="#d7dfe3" stroke-width="3"/><circle cx="58" cy="14" r="5" fill="#f2f5f6" stroke="#d4dde1" stroke-width="2"/><path d="M40 57v20m13-18v23m14-23v21m13-24v19" stroke="#b9c6cd" stroke-width="3"/><path d="M40 77h4m9 5h4m10-4h4m9-5h4" stroke="#8a9da8" stroke-width="2"/></svg><strong>DHT22</strong><small>(Temperature &amp; Humidity)</small></div>
+     <div class="equipment"><svg viewBox="0 0 120 86" role="img" aria-label="Wi-Fi router"><path d="M27 27V7m66 20V7" stroke="#19354a" stroke-width="6" stroke-linecap="round"/><path d="M24 27h72l11 16v22H14V43z" fill="#173b54" stroke="#0b2538" stroke-width="3"/><rect x="24" y="40" width="71" height="13" rx="4" fill="#087d94"/><circle cx="34" cy="58" r="2" fill="#5bdfcf"/><circle cx="45" cy="58" r="2" fill="#5bdfcf"/><circle cx="56" cy="58" r="2" fill="#38c6ef"/><path d="M43 35q18-15 36 0m-28 4q10-9 20 0" fill="none" stroke="#0aa7cd" stroke-width="3"/></svg><strong>Wi‑Fi Router</strong><small>(เชื่อมต่ออินเทอร์เน็ต)</small></div>
+     <div class="equipment"><svg viewBox="0 0 120 86" role="img" aria-label="Laptop for dashboard"><path d="M23 11h74q5 0 5 5v47H18V16q0-5 5-5z" fill="#173b55"/><rect x="25" y="18" width="70" height="37" rx="2" fill="#bcecff"/><path d="M30 48V24h26v24zm33 0V24h27v24z" fill="#eafaff" stroke="#1d84b7" stroke-width="2"/><path d="m33 44 7-8 6 4 7-10m10 15 6-7 5 3 10-10" fill="none" stroke="#11a7d6" stroke-width="3"/><path d="M10 65h100l-8 9H19z" fill="#9eb3c0" stroke="#5d7584" stroke-width="2"/></svg><strong>Computer / Laptop</strong><small>(สำหรับเขียนโค้ดและดู Dashboard)</small></div>
+    </div>
+   </section>
+   <section class="panel green"><div class="panel-title"><span class="stepbadge">2</span>สถาปัตยกรรมระบบ (System Architecture)</div>
+    <div class="architecture"><div class="pipeline">
+     <div class="node"><svg viewBox="0 0 100 80" aria-label="Temperature and humidity sensor"><circle cx="29" cy="31" r="20" fill="#f3fbff"/><path d="M26 16v24a9 9 0 1 0 7 0V16a4 4 0 0 0-7 0z" fill="none" stroke="#0874b8" stroke-width="4"/><path d="M28 32h7" stroke="#e34586" stroke-width="4"/><path d="M66 22c-14 20-13 31 0 35 13-4 14-15 0-35z" fill="#684bdd"/><path d="M66 32v19" stroke="white" stroke-width="3"/></svg><strong>DHT22 Sensor</strong><small>วัดอุณหภูมิและความชื้น</small></div>
+     <div class="arrow">➜</div>
+     <div class="node"><svg viewBox="0 0 100 80" aria-label="ESP32 board"><path d="m11 30 56-21 27 16-56 21z" fill="#172f42" stroke="#111e2a" stroke-width="3"/><path d="m22 29 42-16 19 11-42 17z" fill="#71818c"/><path d="m36 36 26-10 13 8-27 10z" fill="#263d4d"/><circle cx="22" cy="28" r="2" fill="#f6d06f"/><circle cx="86" cy="27" r="2" fill="#f6d06f"/></svg><strong>ESP32</strong><small>อ่านค่าและส่งข้อมูล<br>ผ่าน MQTT</small></div>
+     <div class="arrow">➜</div>
+     <div class="node"><svg viewBox="0 0 100 80" aria-label="MQTT message broker cloud"><path d="M24 52c-17-3-18-25 0-29 5-18 31-18 38-3 19-2 25 23 7 31z" fill="#087fda"/><path d="M40 32q9-8 18 0m-15 6q6-5 12 0m-6 5v8" fill="none" stroke="white" stroke-width="3"/><text x="52" y="63" text-anchor="middle" font-family="Prompt" font-size="11" font-weight="700" fill="white">MQTT</text></svg><strong>MQTT Broker</strong><small>(เช่น HiveMQ / Mosquitto)<br>รับข้อมูลจากอุปกรณ์</small></div>
+     <div class="arrow">➜</div>
+     <div class="node"><svg viewBox="0 0 100 80" aria-label="Database storage"><ellipse cx="49" cy="19" rx="28" ry="10" fill="#0873c6"/><path d="M21 19v43c0 13 56 13 56 0V19m-56 15c0 13 56 13 56 0m-56 15c0 13 56 13 56 0" fill="#1260a7" stroke="#063e78" stroke-width="3"/><path d="M27 34c7 6 38 6 45 0m-45 15c7 6 38 6 45 0" fill="none" stroke="#5cc9ef" stroke-width="2"/></svg><strong>Database</strong><small>จัดเก็บข้อมูลระยะยาว</small></div>
+     <div class="arrow">➜</div>
+     <div class="node"><svg viewBox="0 0 100 80" aria-label="Real-time web dashboard"><rect x="10" y="10" width="80" height="54" rx="5" fill="#173b55"/><rect x="16" y="16" width="68" height="41" rx="2" fill="#c9edff"/><rect x="22" y="22" width="26" height="12" rx="2" fill="#fff"/><rect x="53" y="22" width="25" height="12" rx="2" fill="#fff"/><rect x="22" y="39" width="25" height="13" rx="2" fill="#fff"/><rect x="53" y="39" width="25" height="13" rx="2" fill="#fff"/><path d="m25 31 6-5 5 3 8-5m11 9 6-5 6 2 7-6M25 49l6-6 5 3 8-8" fill="none" stroke="#09a4d4" stroke-width="2"/><path d="M37 66h26l6 5H31z" fill="#547c96"/></svg><strong>Dashboard</strong><small>แสดงผลแบบ Real-time<br>และแจ้งเตือน</small></div>
+    </div><div class="flowrow"><div class="flow">ข้อมูลจากอุปกรณ์ (Publish)</div><div class="flow sub">คำสั่ง / การแจ้งเตือน (Subscribe)</div></div></div>
+   </section>
+   <section class="panel purple"><div class="panel-title"><span class="stepbadge">3</span>ตัวอย่าง Dashboard</div>
+    <div class="dashboard"><div class="dashbar"><span>◉ IoT Monitoring</span><span class="online">● Online</span></div>
+     <div class="dashrow"><div class="metric"><label>Temperature</label><div class="gauge"><span class="reading">28.5<small>°C</small></span></div><span style="font-size:.9cqw">🌡</span></div><div class="metric"><label>Humidity</label><div class="gauge blue"><span class="reading">62.3<small>%</small></span></div><span style="font-size:.9cqw">●</span></div>
+      <div class="chart"><h4>Temperature (°C)</h4><svg viewBox="0 0 230 100" preserveAspectRatio="none" role="img" aria-label="Temperature trend chart"><path d="M23 5v76h201M24 64h200M24 46h200M24 28h200" stroke="#254966" stroke-width="1" fill="none"/><path d="M25 67 54 57 75 42 101 49 123 36 150 46 178 39 202 29 222 34" stroke="#13b6eb" stroke-width="3" fill="none"/><g fill="#51d6f5"><circle cx="25" cy="67" r="2.8"/><circle cx="54" cy="57" r="2.8"/><circle cx="75" cy="42" r="2.8"/><circle cx="101" cy="49" r="2.8"/><circle cx="123" cy="36" r="2.8"/><circle cx="150" cy="46" r="2.8"/><circle cx="178" cy="39" r="2.8"/><circle cx="202" cy="29" r="2.8"/><circle cx="222" cy="34" r="2.8"/></g><text x="24" y="94">08:00</text><text x="91" y="94">10:00</text><text x="159" y="94">12:00</text><text x="207" y="94">14:00</text></svg></div>
+     </div>
+     <div class="dashbottom"><div class="alerts"><h4>🔔 Alert</h4><div class="alertbox"><b>▲ อุณหภูมิสูงเกินกำหนด (&gt; 35°C)</b>2026-10-25　14:32</div></div><div class="table"><h4>▣ ข้อมูลล่าสุด</h4><div class="tablerow"><span>เวลา</span><span>อุณหภูมิ</span><span>ความชื้น</span></div><div class="tablerow"><span>14:30</span><span>28.5</span><span>62.3</span></div><div class="tablerow"><span>14:31</span><span>29.1</span><span>61.8</span></div><div class="tablerow"><span>14:32</span><span>35.2</span><span>60.5</span></div></div></div>
+    </div>
+   </section>
+  </div>
+  <div class="lower">
+   <section class="panel codepanel"><div class="panel-title"><span class="stepbadge">4</span>โค้ดตัวอย่าง (ESP32 – Publish ข้อมูลผ่าน MQTT)</div>
+    <div class="codecontent"><pre class="code"><span class="inc">#include &lt;WiFi.h&gt;
+#include &lt;PubSubClient.h&gt;
+#include &lt;DHT.h&gt;</span>
+
+<span class="kw">#define</span> DHTPIN 4
+<span class="kw">#define</span> DHTTYPE DHT22
+DHT dht(DHTPIN, DHTTYPE);
+
+WiFiClient espClient;
+PubSubClient client(espClient);
+
+<span class="kw">void</span> <span class="str">loop</span>() {
+  <span class="kw">float</span> t = dht.readTemperature();
+  <span class="kw">float</span> h = dht.readHumidity();
+  <span class="kw">char</span> payload[64];
+  snprintf(payload, <span class="str">sizeof(payload)</span>,
+    <span class="str">"{\"temp\":%.1f,\"hum\":%.1f}"</span>, t, h);
+  client.publish(<span class="str">"iot/room1/sensor"</span>, payload);
+  delay(5000);
+}</pre>
+     <div class="codeinfo"><div class="infobox"><h3>◉ Topic ที่ใช้</h3><p>iot/room1/sensor</p></div><div class="infobox"><h3>ตัวอย่างข้อมูล (Payload)</h3><div class="payload">{
+  "temp": 28.5,
+  "hum": 62.3
+}</div></div><div class="infobox note"><h3>☼ หมายเหตุ</h3><ul><li>ใช้ Library ที่เหมาะสม</li><li>กำหนด Wi‑Fi และ Broker ให้ถูกต้อง</li><li>ส่งข้อมูลเป็น JSON หรือ Binary ได้</li></ul></div></div>
+    </div>
+   </section>
+   <section class="panel green"><div class="panel-title"><span class="stepbadge">5</span>ขั้นตอนการทำ Workshop</div>
+    <div class="worksteps">
+     <div class="workrow"><span class="worknum">1</span><span class="workarrow">→</span><span class="workicon">⌘</span><span class="worktext"><b>เตรียมอุปกรณ์และติดตั้ง Library</b>ติดตั้ง ESP32, DHT22 และไลบรารีที่จำเป็น</span></div>
+     <div class="workrow"><span class="worknum">2</span><span class="workarrow">→</span><span class="workicon">〈/〉</span><span class="worktext"><b>เขียนโค้ดและทดสอบการอ่านค่า</b>ตรวจสอบค่า Sensor ผ่าน Serial Monitor</span></div>
+     <div class="workrow"><span class="worknum">3</span><span class="workarrow">→</span><span class="workicon">☁</span><span class="worktext"><b>เชื่อมต่อ MQTT Broker</b>ทดสอบการ Publish / Subscribe ข้อมูล</span></div>
+     <div class="workrow"><span class="worknum">4</span><span class="workarrow">→</span><span class="workicon">▣</span><span class="worktext"><b>สร้าง Dashboard</b>ใช้แพลตฟอร์ม เช่น ThingsBoard หรือ Node-RED</span></div>
+     <div class="workrow"><span class="worknum">5</span><span class="workarrow">→</span><span class="workicon">♟</span><span class="worktext"><b>ตั้งเงื่อนไขแจ้งเตือน</b>เมื่ออุณหภูมิหรือความชื้นเกินค่าที่กำหนด</span></div>
+     <div class="workrow"><span class="worknum">6</span><span class="workarrow">→</span><span class="workicon">⌁</span><span class="worktext"><b>ทดสอบและวิเคราะห์ผล</b>ตรวจสอบข้อมูล กราฟ และการแจ้งเตือน</span></div>
+    </div>
+   </section>
+   <section class="panel pink results"><div class="panel-title"><span class="stepbadge">6</span>ผลลัพธ์ที่ได้</div>
+    <div class="resultbody"><ul class="resultlist"><li><span class="check">✓</span>อุปกรณ์อ่านค่าอุณหภูมิและความชื้นได้</li><li><span class="check">✓</span>ส่งข้อมูลผ่าน MQTT ไปยัง Broker ได้</li><li><span class="check">✓</span>แสดงผลบน Dashboard แบบ Real-time</li><li><span class="check">✓</span>มีระบบแจ้งเตือนเมื่อค่าเกินกำหนด</li><li><span class="check">✓</span>เข้าใจการทำงานของ IoT ทั้งระบบ</li></ul>
+     <div class="growth"><div><h3>🏆 ต่อยอดได้</h3><ul><li>เพิ่มหลายจุดวัด (Multi Sensor)</li><li>ใช้ฐานข้อมูลจริง (Time Series DB)</li><li>เชื่อมต่อ Line Notify / Email</li><li>พัฒนาเป็นระบบโรงงานหรือร้านค้า</li></ul></div><div class="plant"><svg viewBox="0 0 100 120" aria-label="Growing IoT project"><path d="M52 107V66" stroke="#079c93" stroke-width="5" stroke-linecap="round"/><path d="M51 85C17 84 17 59 22 49c20 1 32 14 29 36m2 5c3-27 22-39 39-35 1 19-12 34-39 35" fill="#19b7b0"/><path d="M53 68c-1-22 12-35 28-34 3 18-7 31-28 34" fill="#7b63d3"/><path d="M36 108h37" stroke="#078f8b" stroke-width="5" stroke-linecap="round"/><path d="M74 31q10-11 20 0m-15 7q5-6 10 0m-5 5v5" fill="none" stroke="#806ad5" stroke-width="4" stroke-linecap="round"/></svg></div></div>
+    </div>
+   </section>
+  </div>
+ </section>
+ <footer class="footer"><div class="takeaway"><span class="takeicon">♧</span><span>จากอุปกรณ์จริง สู่ข้อมูลจริง<br>สร้างระบบ IoT ได้ด้วยตัวคุณ</span></div><div class="journey"><div class="journeyitem"><i>⌁</i><span><b>Sensor</b>(วัดค่า)</span></div><span class="journeyarrow">→</span><div class="journeyitem"><i>▣</i><span><b>ESP32</b>(ประมวลผล)</span></div><span class="journeyarrow">→</span><div class="journeyitem"><i>◉</i><span><b>MQTT</b>(ส่งข้อมูล)</span></div><span class="journeyarrow">→</span><div class="journeyitem"><i>▤</i><span><b>Database</b>(จัดเก็บ)</span></div><span class="journeyarrow">→</span><div class="journeyitem"><i>▣</i><span><b>Dashboard</b>(แสดงผล)</span></div><span class="journeyarrow">→</span><div class="journeyitem"><i>♧</i><span><b>Alert</b>(แจ้งเตือน)</span></div></div><div class="tagline">Build　·　Connect　·　Analyze　·　Create Value　⌁</div></footer>
+</main>
+</body></html>

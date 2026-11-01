@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IoT System Design — Slide 9</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:#eaf3fa;font-family:Prompt,"Leelawadee UI",Tahoma,sans-serif;color:#123b60}
+.slide{width:min(100vw,177.7778vh);height:min(100vh,56.25vw);aspect-ratio:16/9;margin:auto;position:relative;overflow:hidden;background:#f7fbff;font-size:1cqw;container-type:inline-size}
+.top{height:14.85%;display:grid;grid-template-columns:8.5% 37% 1px 29.5% 25%;align-items:center;padding:0 1.05%;color:white;background:linear-gradient(105deg,#05274d,#063763 66%,#0573a2);position:relative;overflow:hidden;border-bottom:.12cqw solid #18b9e8}
+.top:after{content:"";position:absolute;inset:0;background:linear-gradient(112deg,transparent 0 74%,#00b7e52c 74.2% 74.7%,transparent 75%),linear-gradient(90deg,transparent 65%,#062d5377);pointer-events:none}
+.badge{height:78%;width:96%;display:grid;place-items:center;background:linear-gradient(135deg,#08c6c5,#0875dd);border-radius:1.05em .85em 1.05em .45em;transform:skew(-12deg);box-shadow:0 0 1.5em #00ace866;position:relative;z-index:1}.badge span{font-size:3.35cqw;font-weight:700;line-height:1;transform:skew(12deg)}
+.heading{padding-left:.5cqw;line-height:1.08;position:relative;z-index:1}.heading h1{font-size:2.8cqw;white-space:nowrap;margin:0 0 .18em;font-weight:700;letter-spacing:-.035em}.heading h1 b{color:#43d5eb}.heading p{font-size:1.55cqw;font-weight:600;margin:0;white-space:nowrap}
+.rule{height:67%;background:#20c6ed;transform:skew(-12deg);position:relative;z-index:1}.intro{font-size:.91cqw;line-height:1.48;padding:0 .65cqw 0 1.5cqw;position:relative;z-index:1;color:#e9faff}.hero{height:100%;background:url('assets/system-design-header.png') center/cover no-repeat;position:relative;z-index:1}
+.main{height:77.8%;padding:1.18% 1.12% .92%;display:grid;grid-template-rows:55% 43.2%;gap:1.8%;background:linear-gradient(180deg,#fff,#eff8ff)}
+.steps{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.48%;min-height:0}
+.step{--c:#0875d1;--p:#eaf7ff;--b:#98d9ff;border:.105cqw solid var(--c);border-radius:.7cqw;overflow:hidden;background:#fff;box-shadow:0 .14cqw .45cqw #0b50871a;min-width:0;min-height:0;display:flex;flex-direction:column;position:relative}
+.step:nth-child(2){--c:#00a384;--p:#e8f9f5;--b:#8de0ce}.step:nth-child(3){--c:#6747c7;--p:#f0edff;--b:#c9bcff}.step:nth-child(4){--c:#f28b14;--p:#fff5e8;--b:#ffd19b}.step:nth-child(5){--c:#00998b;--p:#e7f8f5;--b:#96ddd3}.step:nth-child(6){--c:#0877d2;--p:#eaf7ff;--b:#9dd9ff}.step:nth-child(7){--c:#6543bf;--p:#f0edff;--b:#c8bcff}
+.stephead{height:13.5%;min-height:13.5%;display:flex;align-items:center;gap:.36cqw;padding:.3cqw .42cqw;background:linear-gradient(110deg,var(--c),color-mix(in srgb,var(--c),white 10%));color:#fff}
+.number{width:2.75cqw;height:2.75cqw;flex:none;border-radius:50%;display:grid;place-items:center;font-size:1.8cqw;line-height:1;font-weight:700;background:#ffffff24;border:.15cqw solid #ffffff80;box-shadow:inset 0 0 0 .21cqw #052f5935}
+.stephead h2{font-size:.82cqw;line-height:1.16;margin:0;font-weight:700}.stephead small{display:block;font-size:.68cqw;font-weight:500;margin-top:.12cqw}
+.stepart{height:32%;min-height:32%;padding:.25cqw .35cqw;background:linear-gradient(180deg,#f5fbff,#edf8ff);display:flex;align-items:center;justify-content:center;position:relative}
+.stepart svg{width:100%;height:100%;display:block}.stepart text{font-family:Prompt,"Leelawadee UI",sans-serif;fill:#163f62}
+.stepart.compact{padding:.55cqw .82cqw;background:#f4fbff}
+.stepart.compact svg{width:100%;height:100%;max-width:11.2cqw}
+.stepnotes{list-style:none;padding:.27cqw .4cqw .06cqw;margin:0;display:grid;grid-template-rows:repeat(4,minmax(0,1fr));gap:.025cqw;flex:1;min-height:0}
+.stepnotes li{font-size:.64cqw;line-height:1.16;display:flex;align-items:center;gap:.28cqw;min-height:0}.dot{width:.62cqw;height:.62cqw;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;flex:none;font-size:.42cqw;font-weight:700}
+.output{margin:.25cqw .35cqw .38cqw;padding:.28cqw .38cqw;background:var(--p);border-radius:.46cqw;min-height:17%;font-size:.6cqw;line-height:1.25;display:flex;flex-direction:column;justify-content:center;color:#214b6d}
+.output b{font-size:.67cqw;color:var(--c);margin-bottom:.08cqw}.output b:before{content:"⬟ ";font-size:.74cqw}
+.bottom{display:grid;grid-template-columns:1.02fr 2.08fr .84fr;gap:.78%;min-height:0}
+.panel{border:.1cqw solid #8ed2f5;border-radius:.68cqw;background:linear-gradient(145deg,#f7fcff,#e8f6ff);position:relative;min-width:0;min-height:0;padding:.58cqw .62cqw .4cqw;overflow:hidden}
+.panel h2{font-size:.94cqw;line-height:1.12;margin:-.58cqw -.62cqw .42cqw;padding:.47cqw .62cqw;color:white;background:linear-gradient(100deg,#075ba2,#0879ba);border-radius:.58cqw .58cqw .36cqw .36cqw;white-space:nowrap}
+.consider{display:grid;grid-template-rows:repeat(7,minmax(0,1fr));gap:.08cqw;height:calc(100% - 2cqw);margin:0;padding:0;list-style:none}
+.consider li{display:flex;align-items:center;gap:.36cqw;font-size:.68cqw;line-height:1.17;min-height:0}.check{width:1.08cqw;height:1.08cqw;border-radius:50%;background:#0a9b5d;color:white;display:grid;place-items:center;flex:none;font-size:.67cqw;font-weight:700}
+.architecture{background:linear-gradient(145deg,#f6fcff,#e4f5ff)}.architecture h2{background:linear-gradient(100deg,#064e88,#07599a)}
+.archflow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.5cqw;height:68%;padding:.05cqw .12cqw 0}
+.layer{--lc:#13b8e5;border:.09cqw solid var(--lc);border-radius:.55cqw;background:#f6fcff;overflow:hidden;position:relative;min-width:0;display:flex;flex-direction:column}
+.layer:nth-child(2){--lc:#04aa9c}.layer:nth-child(3){--lc:#7350d4}.layer:nth-child(4){--lc:#0784d7}.layer:nth-child(5){--lc:#0870c9}
+.layer h3{height:17%;min-height:17%;margin:0;background:var(--lc);color:white;text-align:center;display:grid;place-items:center;font-size:.69cqw;line-height:1.1;padding:.1cqw}
+.layerart{height:45%;min-height:45%;display:grid;place-items:center;background:linear-gradient(180deg,#f8fdff,#e9f7ff);position:relative}
+.layerart svg{width:94%;height:94%}.layerart text{font-family:Prompt,sans-serif;fill:#17476e}
+.layer p{font-size:.56cqw;line-height:1.35;margin:.12cqw .32cqw .1cqw;padding-left:.12cqw;flex:1;color:#194669}
+.flows{height:25%;display:grid;grid-template-columns:1fr 1fr;gap:.65cqw;align-items:end;padding:.15cqw .18cqw 0}
+.flow{height:65%;display:grid;place-items:center;color:#fff;font-size:.67cqw;font-weight:600;text-align:center;padding:.15cqw .7cqw;clip-path:polygon(0 50%,5% 0,95% 0,100% 50%,95% 100%,5% 100%);background:linear-gradient(90deg,#0ca94c,#08b4d4)}.flow.control{background:linear-gradient(90deg,#05a8ca,#0796a9)}
+.standards h2{background:linear-gradient(100deg,#0560a0,#0a84bd)}.standardlist{height:calc(100% - 2cqw);display:grid;grid-template-rows:repeat(5,minmax(0,1fr));gap:.15cqw}
+.standard{display:flex;align-items:center;gap:.48cqw;min-height:0;padding:0 .15cqw}.logo{width:3.35cqw;flex:none;text-align:center;color:#07599c;font-size:.88cqw;font-weight:800;line-height:.95}.logo.iso{font-size:.72cqw;border:.14cqw solid #07599c;border-radius:.2cqw;padding:.22cqw .08cqw}.logo.nist{font-size:.9cqw;color:#111;letter-spacing:-.08em}.logo.ietf{font-size:.8cqw;letter-spacing:.13em}.logo.w3c{font-size:1.45cqw;letter-spacing:-.13em}.logo.itu{font-size:.72cqw;border:.13cqw solid #0879c3;width:2.5cqw;height:2.5cqw;border-radius:50%;display:grid;place-items:center;margin:0 .42cqw}
+.standard p{margin:0;font-size:.64cqw;line-height:1.2;color:#15466e}.standard strong{display:block;color:#07599c;font-size:.68cqw;margin-bottom:.06cqw}
+.footer{height:7.35%;background:linear-gradient(100deg,#04264c,#06345f 66%,#042447);color:white;display:flex;align-items:center;justify-content:center;gap:.9cqw;position:relative;border-top:.15cqw solid #17bce4}
+.rocket{font-size:1.5cqw;color:#fff}.footertext{font-size:.92cqw;font-weight:600}.separator{color:#16c5e1;margin:0 .4cqw}.tagline{position:absolute;right:1.2%;font-size:.72cqw;color:#73dced;font-style:italic;letter-spacing:.02em}
+@media(max-aspect-ratio:16/9){.slide{width:100vw;height:56.25vw}}
+</style>
+</head>
+<body>
+<main class="slide">
+ <header class="top">
+  <div class="badge"><span>9</span></div>
+  <div class="heading"><h1>IoT <b>System Design</b></h1><p>การออกแบบระบบ IoT ตั้งแต่ต้นจนถึงการใช้งานจริง</p></div>
+  <div class="rule"></div>
+  <div class="intro">การออกแบบระบบ IoT ที่ดี ต้องเริ่มจากการเข้าใจปัญหา<br>เลือกอุปกรณ์ที่เหมาะสม วางโครงข่ายและสถาปัตยกรรมข้อมูล<br>พร้อมคำนึงถึงความปลอดภัย ความน่าเชื่อถือ และความสามารถ<br>ในการขยายระบบในอนาคต</div>
+  <div class="hero" aria-hidden="true"></div>
+ </header>
+ <section class="main" aria-label="IoT system design process">
+  <div class="steps">
+   <article class="step"><header class="stephead"><span class="number">1</span><h2>กำหนดปัญหาและความต้องการ<small>(Requirement Analysis)</small></h2></header>
+    <div class="stepart compact"><svg viewBox="0 0 200 120" role="img" aria-label="Requirements checklist with target"><g stroke="#08629a" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="17" y="15" width="67" height="91" rx="7" fill="#eaf8ff"/><path d="M38 15V8h26v7M31 39l7 7 13-15M31 62l7 7 13-15M31 85l7 7 13-15"/><circle cx="139" cy="61" r="34" stroke="#0c83c5"/><circle cx="139" cy="61" r="21" stroke="#24bde0"/><circle cx="139" cy="61" r="8" fill="#24bde0" stroke="none"/><path d="m139 61 34-34m-13 2 15-5-4 15"/></g></svg></div>
+    <ul class="stepnotes"><li><span class="dot">•</span>วิเคราะห์ปัญหาและเป้าหมาย</li><li><span class="dot">•</span>กำหนดผู้ใช้งานและผู้มีส่วนได้ส่วนเสีย</li><li><span class="dot">•</span>กำหนดขอบเขตการใช้งาน</li><li><span class="dot">•</span>ระบุ KPI และผลลัพธ์ที่ต้องการ</li></ul>
+    <div class="output"><b>ผลลัพธ์ (Output)</b>เอกสารความต้องการ (SRS) และขอบเขตโครงการ</div>
+   </article>
+   <article class="step"><header class="stephead"><span class="number">2</span><h2>เลือกเซ็นเซอร์และอุปกรณ์<small>(Sensor &amp; Device Selection)</small></h2></header>
+    <div class="stepart compact"><svg viewBox="0 0 200 120" role="img" aria-label="Sensor, controller and IoT device"><g stroke="#087b83" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="34" width="29" height="54" rx="5" fill="#e4faf6"/><path d="M23 18v16m-8-8h16M23 88v12m-8 0h16"/><circle cx="67" cy="36" r="12" fill="#f2fffd"/><path d="M67 48v38m-13-21h26m-13 22v13M57 19q10-12 20 0"/><path d="M82 61h13"/><path d="m88 55 7 6-7 6" fill="none"/><rect x="101" y="28" width="53" height="66" rx="7" fill="#064b5d"/><rect x="109" y="37" width="37" height="48" rx="4" fill="#0a8a91"/><circle cx="127" cy="61" r="12" fill="#27c8ca" stroke="none"/><path d="M155 61h11m-5-6 6 6-6 6" fill="none"/><rect x="174" y="39" width="20" height="46" rx="5" fill="#f0fbff"/><path d="M179 48h10m-10 8h10m-10 8h10"/></g></svg></div>
+    <ul class="stepnotes"><li><span class="dot">•</span>เลือกชนิดเซ็นเซอร์ที่เหมาะสม</li><li><span class="dot">•</span>พิจารณาช่วงการวัด ความแม่นยำ</li><li><span class="dot">•</span>เลือกคอนโทรลเลอร์ / เกตเวย์</li><li><span class="dot">•</span>คำนึงถึงสภาพแวดล้อมการติดตั้ง</li></ul>
+    <div class="output"><b>ผลลัพธ์ (Output)</b>รายการอุปกรณ์และสเปก (BoM)</div>
+   </article>
+   <article class="step"><header class="stephead"><span class="number">3</span><h2>ออกแบบเครือข่ายและการสื่อสาร<small>(Connectivity Design)</small></h2></header>
+    <div class="stepart compact"><svg viewBox="0 0 200 120" role="img" aria-label="Wi-Fi cellular and LoRaWAN options connected to gateway"><g fill="none" stroke="#0875d1" stroke-width="5" stroke-linecap="round"><path d="M12 36q20-19 40 0M19 44q13-13 26 0m-18 8q5-5 10 0m-5 7h.1"/><path d="M79 29q15-15 30 0M84 37q10-10 20 0m-10 7v18"/><path d="M159 26l15 26h-30z" fill="#22c1e5" stroke="#0984bd"/><rect x="61" y="73" width="80" height="34" rx="8" fill="#0c526b" stroke="#0b89a2"/><path d="M71 83h60m-53 12h7m9 0h7m9 0h7m9 0h7" stroke="#52d7e4" stroke-width="3"/><path d="M42 64 66 79m49-17-6 13m41-21-18 27" stroke="#62aada" stroke-width="2" stroke-dasharray="4 5"/></g></svg></div>
+    <ul class="stepnotes"><li><span class="dot">•</span>เลือกเทคโนโลยีการเชื่อมต่อ</li><li><span class="dot">•</span>กำหนดโปรโตคอลการสื่อสาร</li><li><span class="dot">•</span>ออกแบบ IP, DNS, Firewall</li><li><span class="dot">•</span>วางแผนความเสถียรและความหน่วง</li></ul>
+    <div class="output"><b>ผลลัพธ์ (Output)</b>แผนผังเครือข่ายและการสื่อสาร (Network Diagram)</div>
+   </article>
+   <article class="step"><header class="stephead"><span class="number">4</span><h2>ออกแบบสถาปัตยกรรมข้อมูล<small>(Data Architecture)</small></h2></header>
+    <div class="stepart compact"><svg viewBox="0 0 200 120" role="img" aria-label="Cloud data architecture with storage and analytics"><g stroke="#0b93bf" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 66h43m9 0h44m10 0h35" stroke-dasharray="5 6"/><path d="M70 39c4-20 35-21 42-2 22-2 25 31 3 34H55c-19-4-14-30 4-32z" fill="#39bbeb" stroke="#168bc7"/><path d="M95 41v22m-8-8 8 8 8-8" stroke="white"/><ellipse cx="173" cy="43" rx="16" ry="7" fill="#08758e"/><path d="M157 43v43c0 9 32 9 32 0V43m-32 19c0 9 32 9 32 0m-32 20c0 9 32 9 32 0" fill="#e9fbff"/><circle cx="25" cy="89" r="13" fill="#e7fbff"/><path d="M18 89h14m-11-5 11 5-11 5"/><rect x="69" y="79" width="34" height="25" rx="3" fill="#effbff"/><path d="m74 99 8-9 6 4 10-11"/><path d="M120 103V81m-7 8 7-8 7 8m-14 8h14"/></g></svg></div>
+    <ul class="stepnotes"><li><span class="dot">•</span>กำหนดรูปแบบข้อมูลและโครงสร้าง</li><li><span class="dot">•</span>เลือกฐานข้อมูล (Time-Series / DB)</li><li><span class="dot">•</span>ออกแบบ Data Flow และ API</li><li><span class="dot">•</span>วางแผน Dashboard และการแจ้งเตือน</li></ul>
+    <div class="output"><b>ผลลัพธ์ (Output)</b>สถาปัตยกรรมข้อมูลและระบบ (Data Architecture)</div>
+   </article>
+   <article class="step"><header class="stephead"><span class="number">5</span><h2>ความปลอดภัยและความน่าเชื่อถือ<small>(Security &amp; Reliability)</small></h2></header>
+    <div class="stepart compact"><svg viewBox="0 0 200 120" role="img" aria-label="Central IoT security shield with identity, encryption, access and update"><g fill="none" stroke="#078c9e" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M49 31 77 49m74-18-28 18M49 88l29-18m73 18-28-18" stroke="#55becb" stroke-width="3"/><circle cx="37" cy="24" r="15" fill="#e6fbfa"/><path d="M32 25v-5a5 5 0 0 1 10 0v5m-12 0h14v11H30z"/><circle cx="163" cy="24" r="15" fill="#e6fbfa"/><path d="M158 25v-5a5 5 0 0 1 10 0v5m-12 0h14v11h-14z"/><circle cx="37" cy="95" r="15" fill="#e6fbfa"/><path d="m37 84 8 4v7c0 6-4 10-8 12-5-2-8-6-8-12v-7z"/><circle cx="163" cy="95" r="15" fill="#e6fbfa"/><ellipse cx="163" cy="90" rx="7" ry="3"/><path d="M156 90v10c0 4 14 4 14 0V90"/><path d="M100 18 128 29v23c0 20-13 34-28 42-15-8-28-22-28-42V29z" fill="#0876bc" stroke="#075790"/><path d="M92 52v-7a8 8 0 0 1 16 0v7m-19 0h22v18H89z" stroke="white"/><circle cx="100" cy="59" r="2.5" fill="white"/></g></svg></div>
+    <ul class="stepnotes"><li><span class="dot">•</span>กำหนดสิทธิ์และการยืนยันตัวตน</li><li><span class="dot">•</span>เข้ารหัสข้อมูลทั้งส่งและจัดเก็บ</li><li><span class="dot">•</span>ป้องกันภัยคุกคามและการเข้าถึง</li><li><span class="dot">•</span>วางแผนสำรองและกู้คืนระบบ</li></ul>
+    <div class="output"><b>ผลลัพธ์ (Output)</b>มาตรการความปลอดภัยและแผนความต่อเนื่องของระบบ</div>
+   </article>
+   <article class="step"><header class="stephead"><span class="number">6</span><h2>ติดตั้ง ทดสอบ และใช้งานจริง<small>(Deployment &amp; Testing)</small></h2></header>
+    <div class="stepart compact"><svg viewBox="0 0 200 120" role="img" aria-label="Laptop dashboard and IoT device for deployment testing"><g stroke="#0871bb" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 22h112a6 6 0 0 1 6 6v66H12V28a6 6 0 0 1 6-6z" fill="#e7f7ff"/><path d="M5 98h148l-10 10H16z" fill="#addff5"/><rect x="24" y="33" width="42" height="25" rx="3"/><path d="M29 53V38h32v15zM31 50l8-7 7 4 9-7" stroke="#13a4d6"/><rect x="74" y="33" width="42" height="25" rx="3"/><path d="M79 53V38h32v15zM81 50l7-6 8 4 9-8" stroke="#13a4d6"/><path d="M164 38q18-19 36 0m-30 8q12-12 24 0m-17 8q5-5 10 0m-5 6v14"/><rect x="158" y="76" width="34" height="28" rx="5" fill="#e8f7ff"/><circle cx="175" cy="89" r="6" fill="#0ba2c6"/></g></svg></div>
+    <ul class="stepnotes"><li><span class="dot">•</span>ติดตั้งอุปกรณ์และระบบ</li><li><span class="dot">•</span>ทดสอบการทำงานของทุกส่วน</li><li><span class="dot">•</span>ตรวจสอบความถูกต้องของข้อมูล</li><li><span class="dot">•</span>ปรับปรุงแก้ไขตามผลทดสอบ</li></ul>
+    <div class="output"><b>ผลลัพธ์ (Output)</b>ระบบพร้อมใช้งานและรายงานผลการทดสอบ</div>
+   </article>
+   <article class="step"><header class="stephead"><span class="number">7</span><h2>ประเมินผลและปรับปรุง<small>(Evaluation &amp; Improvement)</small></h2></header>
+    <div class="stepart compact"><svg viewBox="0 0 200 120" role="img" aria-label="KPI growth chart surrounded by a continuous improvement cycle"><g stroke-linecap="round" stroke-linejoin="round"><path d="M41 57A59 59 0 0 1 146 27" fill="none" stroke="#6042b9" stroke-width="11"/><path d="m137 15 19 10-17 14z" fill="#6042b9"/><path d="M159 67a59 59 0 0 1-106 31" fill="none" stroke="#6042b9" stroke-width="11"/><path d="m62 112-18-12 17-14z" fill="#6042b9"/><path d="M67 78V62h20v16m8 0V49h20v29m8 0V35h20v43" fill="#452da0"/><path d="m67 56 26-17 18 5 27-25" fill="none" stroke="#2e9fe0" stroke-width="6"/></g></svg></div>
+    <ul class="stepnotes"><li><span class="dot">•</span>วัดผลตาม KPI ที่กำหนด</li><li><span class="dot">•</span>วิเคราะห์ปัญหาและข้อผิดพลาด</li><li><span class="dot">•</span>ปรับปรุงประสิทธิภาพ</li><li><span class="dot">•</span>วางแผนการขยายในอนาคต</li></ul>
+    <div class="output"><b>ผลลัพธ์ (Output)</b>รายงานผลการดำเนินงานและแผนพัฒนาระบบ</div>
+   </article>
+  </div>
+  <div class="bottom">
+   <section class="panel"><h2>☼ &nbsp;ประเด็นสำคัญที่ควรพิจารณาเพิ่มเติม</h2>
+    <ul class="consider"><li><span class="check">✓</span>คำนวณจำนวนอุปกรณ์และปริมาณข้อมูล (Data Volume)</li><li><span class="check">✓</span>เลือกความถี่ในการส่งข้อมูล (Sampling Rate)</li><li><span class="check">✓</span>กำหนด Latency และเวลาตอบสนอง (Response Time)</li><li><span class="check">✓</span>ความพร้อมใช้งาน (Availability) และความทนทาน</li><li><span class="check">✓</span>รองรับการขยายระบบ (Scalability)</li><li><span class="check">✓</span>ต้นทุนอุปกรณ์ เครือข่าย Cloud และบำรุงรักษา (TCO)</li><li><span class="check">✓</span>เชื่อมต่อระบบเดิม เช่น PLC, SCADA, MES, ERP</li></ul>
+   </section>
+   <section class="panel architecture"><h2>ตัวอย่างสถาปัตยกรรมระบบ IoT</h2>
+    <div class="archflow">
+     <article class="layer"><h3>Device Layer</h3><div class="layerart"><svg viewBox="0 0 150 115"><g fill="none" stroke="#0872b8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M26 17v38a11 11 0 1 0 18 9 11 11 0 0 0-5-9V17a7 7 0 0 0-13 0z"/><path d="M32 42h8"/><circle cx="91" cy="38" r="19" fill="#e1f5ff"/><circle cx="91" cy="38" r="7" fill="#1ab6dd"/><path d="M61 38h10m38 0h14"/><rect x="124" y="21" width="19" height="38" rx="4" fill="#0c779d"/><path d="M129 29h9m-9 8h9m-9 8h9" stroke="#78e7eb"/></g><text x="35" y="83" text-anchor="middle" font-size="9">Sensor</text><text x="91" y="83" text-anchor="middle" font-size="9">Controller</text><text x="134" y="83" text-anchor="middle" font-size="9">Device</text><text x="74" y="108" text-anchor="middle" font-size="10">Sensor  •  Actuator</text></svg></div><p>• Sensor &amp; Actuator<br>• เก็บข้อมูลจากหน้างาน</p></article>
+     <article class="layer"><h3>Edge Layer</h3><div class="layerart"><svg viewBox="0 0 150 115"><g stroke="#08758d" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="34" y="35" width="82" height="47" rx="9" fill="#0a506e"/><path d="M44 46h62m-62 11h62m-49 11h9m12 0h9m12 0h9" stroke="#53d5df"/><path d="M73 32q7-10 14 0m-20-5q13-18 27 0M75 25v-9"/></g><text x="75" y="103" text-anchor="middle" font-size="10">Gateway / Edge Device</text></svg></div><p>• Data Processing<br>• Protocol Conversion<br>• Local Storage</p></article>
+     <article class="layer"><h3>Network Layer</h3><div class="layerart"><svg viewBox="0 0 150 115"><g fill="none" stroke="#704bcc" stroke-width="5" stroke-linecap="round"><path d="M43 32q32-30 64 0m-53 11q21-20 42 0m-30 11q9-9 18 0m-9 8v31"/><path d="M64 89h22m-18 8h14"/></g><text x="75" y="110" text-anchor="middle" font-size="10">Secure Connectivity</text></svg></div><p>• Wi‑Fi / 4G / 5G / LoRaWAN<br>• MQTT / HTTP<br>• VPN / Firewall</p></article>
+     <article class="layer"><h3>Cloud Layer</h3><div class="layerart"><svg viewBox="0 0 150 115"><path d="M34 56c4-18 31-20 39-3 22-2 27 29 4 34H27c-20-4-15-29 7-31" fill="#e6f7ff" stroke="#0875c4" stroke-width="4"/><path d="M75 48v26m-10-10 10 10 10-10" fill="none" stroke="#09a7d2" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><text x="75" y="107" text-anchor="middle" font-size="10">IoT Platform</text></svg></div><p>• Database<br>• Analytics<br>• Device Management</p></article>
+     <article class="layer"><h3>Application Layer</h3><div class="layerart"><svg viewBox="0 0 150 115"><g fill="none" stroke="#086da9" stroke-width="4" stroke-linejoin="round"><rect x="15" y="21" width="77" height="54" rx="5" fill="#e6f7ff"/><path d="M25 65V34h56v31z"/><rect x="102" y="25" width="29" height="52" rx="5" fill="#e6f7ff"/><path d="M108 34h17v22h-17zm4 36h9"/><path d="M32 58l10-9 10 5 15-15" stroke="#12a2d4"/></g><text x="75" y="104" text-anchor="middle" font-size="10">Dashboard / Mobile App</text></svg></div><p>• Visualization<br>• Alert / Notification<br>• Business System</p></article>
+    </div>
+    <div class="flows"><div class="flow">Data Flow (ข้อมูลจากอุปกรณ์ → ระบบกลาง)</div><div class="flow control">Control Flow (คำสั่งจากระบบ → อุปกรณ์)</div></div>
+   </section>
+   <section class="panel standards"><h2>◎ &nbsp;มาตรฐานและแนวทางอ้างอิง</h2>
+    <div class="standardlist"><div class="standard"><div class="logo iso">ISO<br>◉</div><p><strong>ISO/IEC 30141:2024</strong>IoT Reference Architecture</p></div><div class="standard"><div class="logo nist">NIST</div><p><strong>NIST SP 800-183</strong>Networks of Things</p></div><div class="standard"><div class="logo ietf">IETF</div><p><strong>IETF</strong>IoT และโปรโตคอลเครือข่าย</p></div><div class="standard"><div class="logo w3c">W3C</div><p><strong>W3C</strong>Web of Things</p></div><div class="standard"><div class="logo itu">ITU</div><p><strong>ITU-T Y.4618 (2026)</strong>AIoT Reference Model</p></div></div>
+   </section>
+  </div>
+ </section>
+ <footer class="footer"><span class="rocket">🚀</span><div class="footertext">ออกแบบอย่างเป็นระบบ <span class="separator">|</span> ปลอดภัย <span class="separator">|</span> ยืดหยุ่น <span class="separator">|</span> พร้อมต่อการเติบโตในอนาคต</div><div class="tagline">Smarter Devices　·　Better Data　·　A Connected Future</div></footer>
+</main>
+</body></html>

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IoT Security — Slide 8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:#eaf3fa;font-family:Prompt,"Leelawadee UI",Tahoma,sans-serif;color:#123b60}
+.slide{width:min(100vw,177.7778vh);height:min(100vh,56.25vw);aspect-ratio:16/9;margin:auto;position:relative;overflow:hidden;background:#f7fbff;font-size:1cqw;container-type:inline-size}
+.top{height:15.8%;display:grid;grid-template-columns:8.5% 32.5% 1px 32% 27%;align-items:center;padding:0 1.05%;color:white;background:linear-gradient(105deg,#05274d,#063763 67%,#0573a2);position:relative;overflow:hidden;border-bottom:.12cqw solid #18b9e8}
+.top:after{content:"";position:absolute;inset:0;background:linear-gradient(112deg,transparent 0 75%,#00b7e52c 75.2% 75.7%,transparent 76%),linear-gradient(90deg,transparent 65%,#062d53aa);pointer-events:none}
+.badge{height:78%;width:96%;display:grid;place-items:center;background:linear-gradient(135deg,#08c6c5,#0875dd);border-radius:1.05em .85em 1.05em .45em;transform:skew(-12deg);box-shadow:0 0 1.5em #00ace866;position:relative;z-index:1}.badge span{font-size:3.35cqw;font-weight:700;line-height:1;transform:skew(12deg)}
+.heading{padding-left:.45cqw;line-height:1.08;position:relative;z-index:1}.heading h1{font-size:2.8cqw;white-space:nowrap;margin:0 0 .2em;font-weight:700;letter-spacing:-.035em}.heading h1 b{color:#43d5eb}.heading p{font-size:1.7cqw;font-weight:600;margin:0;white-space:nowrap}
+.rule{height:65%;background:#20c6ed;transform:skew(-12deg);position:relative;z-index:1}.intro{font-size:.99cqw;line-height:1.46;padding:0 1cqw 0 2.5cqw;position:relative;z-index:1;color:#e9faff}.hero{height:100%;background:url('assets/security-header.png') center/cover no-repeat;position:relative;z-index:1}
+.content{height:74.4%;padding:1.15% 1.35% .65%;display:grid;grid-template-rows:60.8% 37.4%;gap:1.8%;background:linear-gradient(180deg,#fff,#f0f8ff)}
+.cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.78%;min-height:0}
+.card{--c:#0874d1;--p:#e8f6ff;--b:#9cd8ff;position:relative;min-width:0;min-height:0;border:.11cqw solid var(--c);border-radius:.78cqw;overflow:hidden;background:#fff;box-shadow:0 .16cqw .5cqw #0c50871b;display:flex;flex-direction:column}
+.card.green{--c:#00a27e;--p:#e7f8f5;--b:#8ee1cf}.card.purple{--c:#6846ca;--p:#f0edff;--b:#c8bcff}.card.orange{--c:#f28b10;--p:#fff5e8;--b:#ffd19b}.card.teal{--c:#0095ac;--p:#e7f8fb;--b:#9de2ec}
+.cardhead{height:15.5%;min-height:15.5%;background:linear-gradient(110deg,var(--c),color-mix(in srgb,var(--c),white 12%));color:white;display:flex;align-items:center;gap:.62cqw;padding:.4cqw .65cqw;position:relative}
+.num{width:3.35cqw;height:3.35cqw;flex:none;border-radius:50%;display:grid;place-items:center;font-size:2.15cqw;line-height:1;font-weight:700;background:#ffffff24;border:.16cqw solid #ffffff77;box-shadow:inset 0 0 0 .25cqw #052f5933}
+.cardhead h2{font-size:1.14cqw;line-height:1.12;margin:0;font-weight:700}.cardhead h2 small{display:block;font-size:.87cqw;font-weight:500;margin-top:.15cqw}
+.diagram{height:38%;min-height:38%;padding:.32cqw .48cqw .12cqw;background:linear-gradient(180deg,#f4fbff,#edf8ff);display:flex;align-items:center;justify-content:center}
+.diagram svg{width:100%;height:100%;display:block}.diagram text{font-family:Prompt,"Leelawadee UI",sans-serif;fill:#173e62}
+.points{list-style:none;padding:.36cqw .6cqw .12cqw;margin:0;display:grid;grid-template-rows:repeat(3,minmax(0,1fr));gap:.04cqw;flex:1;min-height:0}
+.points li{font-size:.73cqw;line-height:1.2;display:flex;align-items:center;gap:.36cqw;min-height:0}.tick{width:1.02cqw;height:1.02cqw;border-radius:50%;background:var(--c);color:white;display:grid;place-items:center;flex:none;font-size:.68cqw;font-weight:700}
+.example{margin:.3cqw .46cqw .48cqw;padding:.38cqw .5cqw;background:var(--p);border-radius:.55cqw;color:#164769;font-size:.67cqw;line-height:1.3;min-height:14%;display:flex;flex-direction:column;justify-content:center}
+.example strong{color:var(--c);font-size:.76cqw;margin-bottom:.12cqw}.example strong:before{content:"☼ ";font-size:1.05cqw}
+.lower{display:grid;grid-template-columns:2fr 1.08fr .78fr;gap:.65%;min-height:0}
+.panel{border:.1cqw solid #9ed6f2;border-radius:.72cqw;background:linear-gradient(145deg,#f7fcff,#e9f6ff);position:relative;min-width:0;min-height:0;padding:.68cqw .72cqw .48cqw;overflow:hidden}
+.panel h2{font-size:1.03cqw;line-height:1.15;margin:-.68cqw -.72cqw .55cqw;padding:.52cqw .72cqw;color:white;background:linear-gradient(100deg,#075ba2,#0879ba);border-radius:.62cqw .62cqw .38cqw .38cqw;white-space:nowrap}
+.layerflow{height:28%;display:grid;grid-template-columns:repeat(5,1fr);gap:.22cqw;margin:.28cqw 0 .42cqw}
+.layer{--lc:#0875d0;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;background:linear-gradient(120deg,var(--lc),color-mix(in srgb,var(--lc),white 15%));clip-path:polygon(0 0,82% 0,100% 50%,82% 100%,0 100%,14% 50%);padding:.2cqw .34cqw .2cqw .55cqw;text-align:center}
+.layer:nth-child(2){--lc:#00a98c}.layer:nth-child(3){--lc:#7045c7}.layer:nth-child(4){--lc:#f39412}.layer:nth-child(5){--lc:#0879d3}
+.layer svg{width:1.65cqw;height:1.65cqw;stroke:white;fill:none;stroke-width:2.2;margin-bottom:.13cqw}.layer b{font-size:.68cqw;line-height:1.12}
+.layernotes{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.25cqw;height:calc(72% - .7cqw)}
+.layernotes ul{margin:0;padding:.24cqw .18cqw .12cqw .78cqw;background:#ffffffa8;border-radius:.34cqw;list-style:none}
+.layernotes li{font-size:.59cqw;line-height:1.38;margin:.18cqw 0;position:relative}.layernotes li:before{content:"✓";font-weight:700;color:var(--lc);position:absolute;left:-.56cqw}
+.best{background:linear-gradient(145deg,#f7fffd,#ebfbf8);border-color:#8bdfd7}.best h2{background:linear-gradient(100deg,#087f91,#09a5a0)}
+.practice{list-style:none;margin:.18cqw 0 0;padding:0;display:grid;grid-template-rows:repeat(6,minmax(0,1fr));height:calc(100% - 2.2cqw);gap:.1cqw}
+.practice li{display:flex;align-items:center;gap:.4cqw;font-size:.69cqw;line-height:1.18;min-height:0}.practice .tick{background:#079d65;width:1.05cqw;height:1.05cqw}
+.threats{background:linear-gradient(145deg,#fff8fa,#fff0f2);border-color:#f1a2ac}.threats h2{background:linear-gradient(100deg,#d52e46,#ed4a58)}
+.threatlist{display:grid;grid-template-rows:repeat(5,minmax(0,1fr));height:calc(100% - 2.2cqw);gap:.12cqw}
+.threat{display:flex;align-items:center;gap:.46cqw;background:#ffffffb5;border-radius:.42cqw;padding:0 .3cqw;font-size:.68cqw;line-height:1.15}.threat i{font-style:normal;width:1.48cqw;height:1.48cqw;display:grid;place-items:center;border-radius:50%;background:#d9364c;color:white;font-size:.82cqw;flex:none;font-weight:700}
+.footer{height:9.8%;background:linear-gradient(100deg,#04264c,#06345f 66%,#042447);color:white;display:flex;align-items:center;justify-content:center;gap:1.1cqw;position:relative;border-top:.16cqw solid #17bce4}
+.footshield{width:2.65cqw;height:3cqw;display:grid;place-items:center;color:#fff;background:linear-gradient(145deg,#1cc8ed,#0871d5);clip-path:polygon(50% 0,92% 17%,88% 67%,50% 100%,12% 67%,8% 17%);font-size:1.5cqw;text-shadow:0 1px 4px #004375}
+.footlabel{font-size:1.14cqw;font-weight:600}.equation{display:flex;align-items:center;gap:.68cqw;font-size:1.28cqw;font-weight:600}.equation b{color:#55d8ed}.equation em{font-style:normal;color:#2bd3e9;font-size:1.45cqw}
+@media(max-aspect-ratio:16/9){.slide{width:100vw;height:56.25vw}}
+</style>
+</head>
+<body>
+<main class="slide">
+  <header class="top">
+    <div class="badge"><span>8</span></div>
+    <div class="heading"><h1>IoT <b>Security</b></h1><p>ความปลอดภัยของระบบ IoT</p></div>
+    <div class="rule"></div>
+    <div class="intro">ความปลอดภัยต้องเป็นส่วนหนึ่งของการออกแบบระบบตั้งแต่ต้น<br>เพื่อป้องกันการเข้าถึง การแก้ไขข้อมูล และการควบคุมอุปกรณ์<br>โดยไม่ได้รับอนุญาต ทั้งในปัจจุบันและอนาคต</div>
+    <div class="hero" aria-hidden="true"></div>
+  </header>
+  <section class="content" aria-label="IoT Security overview">
+    <div class="cards">
+      <article class="card">
+        <header class="cardhead"><span class="num">1</span><h2>การยืนยันตัวตน<small>(Authentication)</small></h2></header>
+        <div class="diagram"><svg viewBox="0 0 300 130" role="img" aria-label="Device identity verified before access"><g stroke="#0874d1" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="26" width="49" height="66" rx="8" fill="#d7f2ff"/><rect x="20" y="38" width="26" height="34" rx="3"/><path d="M30 81h8M68 58h29m-9-9 10 9-10 9"/><path d="M137 26l29 11v23c0 20-14 33-29 40-15-7-29-20-29-40V37z" fill="#12bce3"/><path d="m123 58 10 10 20-23" stroke="white" stroke-width="6"/><path d="M174 58h26m-9-9 10 9-10 9"/><rect x="214" y="34" width="75" height="49" rx="7" fill="#0874d1"/><path d="M228 47h46M228 58h46M228 69h31" stroke="white"/></g><text x="33" y="112" text-anchor="middle" font-size="12">Device ID</text><text x="151" y="112" text-anchor="middle" font-size="12">Identity Check</text><text x="251" y="112" text-anchor="middle" font-size="12">Access Granted</text></svg></div>
+        <ul class="points"><li><span class="tick">✓</span>ยืนยันตัวตนอุปกรณ์และผู้ใช้งาน</li><li><span class="tick">✓</span>ใช้รหัสผ่าน คีย์ดิจิทัล หรือใบรับรอง</li><li><span class="tick">✓</span>ป้องกันการปลอมแปลงอุปกรณ์</li></ul>
+        <div class="example"><strong>ตัวอย่าง</strong>ใช้ X.509 Certificate เพื่อยืนยันตัวตนอุปกรณ์ก่อนเชื่อมต่อเข้าสู่ระบบ</div>
+      </article>
+      <article class="card green">
+        <header class="cardhead"><span class="num">2</span><h2>การเข้ารหัสข้อมูล<small>(Encryption)</small></h2></header>
+        <div class="diagram"><svg viewBox="0 0 300 130" role="img" aria-label="Encrypt data in transit"><g stroke="#009b78" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="31" width="45" height="61" rx="8" fill="#d7f7ee"/><rect x="14" y="40" width="27" height="31" rx="3"/><path d="M58 60h25m-8-8 9 8-9 8"/><circle cx="122" cy="60" r="30" fill="#00a27e"/><rect x="111" y="57" width="22" height="19" rx="3" stroke="white"/><path d="M115 57v-8a7 7 0 0 1 14 0v8" stroke="white"/><path d="M159 60h23m-8-8 9 8-9 8"/><path d="M225 40c5-13 27-14 34-1 20-1 23 30 2 32h-48c-18-3-15-28 2-29z" fill="#42b7ef" stroke="#168bd0"/></g><text x="25" y="111" text-anchor="middle" font-size="11">Plain Data</text><text x="122" y="111" text-anchor="middle" font-size="11">TLS / SSL</text><text x="240" y="111" text-anchor="middle" font-size="11">Encrypted</text><text x="174" y="41" font-size="9" fill="#168bd0">010101</text><text x="174" y="53" font-size="9" fill="#168bd0">110010</text></svg></div>
+        <ul class="points"><li><span class="tick">✓</span>เข้ารหัสข้อมูลทั้งขณะส่งและจัดเก็บ</li><li><span class="tick">✓</span>ใช้โปรโตคอลปลอดภัย เช่น TLS/SSL</li><li><span class="tick">✓</span>ป้องกันการดักฟังและแก้ไขข้อมูล</li></ul>
+        <div class="example"><strong>ตัวอย่าง</strong>ใช้ MQTT over TLS หรือ HTTPS ในการรับส่งข้อมูล</div>
+      </article>
+      <article class="card purple">
+        <header class="cardhead"><span class="num">3</span><h2>การควบคุมสิทธิ์<small>(Authorization)</small></h2></header>
+        <div class="diagram"><svg viewBox="0 0 300 130" role="img" aria-label="Role-based access for administrator, operator and viewer"><g fill="#6846ca"><circle cx="52" cy="32" r="14"/><path d="M27 76c0-18 11-28 25-28s25 10 25 28z"/><circle cx="150" cy="32" r="14" fill="#3d83d6"/><path d="M125 76c0-18 11-28 25-28s25 10 25 28z" fill="#3d83d6"/><circle cx="248" cy="32" r="14" fill="#71809c"/><path d="M223 76c0-18 11-28 25-28s25 10 25 28z" fill="#71809c"/></g><text x="52" y="91" text-anchor="middle" font-size="12">Admin</text><text x="150" y="91" text-anchor="middle" font-size="12">Operator</text><text x="248" y="91" text-anchor="middle" font-size="12">Viewer</text><rect x="5" y="101" width="87" height="23" rx="7" fill="#059c78"/><rect x="106" y="101" width="87" height="23" rx="7" fill="#258bd6"/><rect x="207" y="101" width="87" height="23" rx="7" fill="#7a879b"/><text x="48" y="117" text-anchor="middle" fill="white" font-size="10">Full Access</text><text x="149" y="117" text-anchor="middle" fill="white" font-size="10">Read / Write</text><text x="250" y="117" text-anchor="middle" fill="white" font-size="10">Read Only</text></svg></div>
+        <ul class="points"><li><span class="tick">✓</span>กำหนดสิทธิ์ตามบทบาท (Role-based)</li><li><span class="tick">✓</span>จำกัดการเข้าถึงข้อมูลและอุปกรณ์</li><li><span class="tick">✓</span>ตรวจสอบและบันทึกการเข้าถึง</li></ul>
+        <div class="example"><strong>ตัวอย่าง</strong>ใช้ Role-Based Access Control (RBAC) ในระบบ Cloud Platform</div>
+      </article>
+      <article class="card orange">
+        <header class="cardhead"><span class="num">4</span><h2>การอัปเดต Firmware<small>(Secure Update)</small></h2></header>
+        <div class="diagram"><svg viewBox="0 0 300 130" role="img" aria-label="Verified secure firmware update"><g stroke="#e9820b" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="37" width="48" height="56" rx="8" fill="#fff0d9"/><rect x="17" y="46" width="30" height="26" rx="3"/><path d="M63 64h32m-9-9 10 9-10 9"/><rect x="104" y="58" width="101" height="18" rx="9" fill="white"/><rect x="107" y="61" width="64" height="12" rx="6" fill="#31b6e7" stroke="none"/><path d="M150 52V22m-10 10 10-10 10 10" stroke="#148ad0" stroke-width="7"/><path d="M247 29l28 10v22c0 17-13 29-28 36-15-7-28-19-28-36V39z" fill="#e5fbf3" stroke="#009d7d"/><path d="m234 59 9 9 18-21" stroke="#009d7d" stroke-width="6"/></g><path d="M127 52c-9-11 0-23 10-22 5-16 31-17 38-1 17-1 21 22 6 27h-45" fill="#43b8ef" stroke="#168bd0" stroke-width="3"/><text x="32" y="112" text-anchor="middle" font-size="11">Device</text><text x="153" y="106" text-anchor="middle" font-size="11">Firmware Update</text><text x="247" y="112" text-anchor="middle" font-size="11">Verified Secure</text></svg></div>
+        <ul class="points"><li><span class="tick">✓</span>อัปเดตซอฟต์แวร์เพื่อเพิ่มความปลอดภัย</li><li><span class="tick">✓</span>ยืนยันลายเซ็นดิจิทัล (Digital Signature)</li><li><span class="tick">✓</span>กันเฟิร์มแวร์ที่ไม่ได้รับอนุญาต</li></ul>
+        <div class="example"><strong>ตัวอย่าง</strong>ใช้ Secure OTA Update พร้อมตรวจสอบความถูกต้อง</div>
+      </article>
+      <article class="card teal">
+        <header class="cardhead"><span class="num">5</span><h2>การป้องกันภัยคุกคาม<small>(Threat Protection)</small></h2></header>
+        <div class="diagram"><svg viewBox="0 0 300 130" role="img" aria-label="Threat protection shield against malware, DDoS, unauthorized access and data breach"><g stroke="#53c7df" stroke-width="2"><path d="M150 63 55 27M150 63 246 27M150 63 57 100M150 63 245 100"/></g><circle cx="55" cy="25" r="20" fill="#e4faff" stroke="#0095ac" stroke-width="3"/><circle cx="245" cy="25" r="20" fill="#e4faff" stroke="#0095ac" stroke-width="3"/><circle cx="55" cy="101" r="20" fill="#e4faff" stroke="#0095ac" stroke-width="3"/><circle cx="245" cy="101" r="20" fill="#e4faff" stroke="#0095ac" stroke-width="3"/><text x="55" y="29" text-anchor="middle" font-size="9">BUG</text><text x="245" y="29" text-anchor="middle" font-size="9">DDoS</text><text x="55" y="105" text-anchor="middle" font-size="8">USER</text><text x="245" y="105" text-anchor="middle" font-size="8">DATA</text><path d="M150 20 184 32v27c0 24-16 40-34 49-18-9-34-25-34-49V32z" fill="#10a9d7" stroke="#0873bb" stroke-width="4"/><path d="M139 58v-7a11 11 0 0 1 22 0v7m-25 0h28v23h-28z" fill="none" stroke="white" stroke-width="4"/><circle cx="150" cy="68" r="3" fill="white"/><text x="55" y="51" text-anchor="middle" font-size="8">Malware</text><text x="245" y="51" text-anchor="middle" font-size="8">DDoS</text><text x="55" y="126" text-anchor="middle" font-size="7">Unauthorized</text><text x="245" y="126" text-anchor="middle" font-size="7">Data Breach</text></svg></div>
+        <ul class="points"><li><span class="tick">✓</span>ตรวจจับและป้องกันการบุกรุก</li><li><span class="tick">✓</span>ใช้ Firewall / IDS / IPS</li><li><span class="tick">✓</span>เฝ้าระวังพฤติกรรมผิดปกติ</li></ul>
+        <div class="example"><strong>ตัวอย่าง</strong>ตรวจจับความผิดปกติจากการเชื่อมต่อและรับส่งข้อมูล</div>
+      </article>
+    </div>
+    <div class="lower">
+      <section class="panel layers"><h2>⬟ &nbsp;ระดับความปลอดภัยของระบบ IoT</h2>
+        <div class="layerflow">
+          <div class="layer"><svg viewBox="0 0 32 32"><rect x="8" y="7" width="16" height="19" rx="2"/><path d="M12 7V4h8v3M12 12h8m-8 4h8m-8 4h5"/></svg><b>Device Layer</b></div>
+          <div class="layer"><svg viewBox="0 0 32 32"><path d="M3 13c8-8 18-8 26 0M7 18c5-5 13-5 18 0m-13 5c2-2 6-2 8 0m-4 4h.1"/></svg><b>Network Layer</b></div>
+          <div class="layer"><svg viewBox="0 0 32 32"><ellipse cx="16" cy="7" rx="10" ry="4"/><path d="M6 7v17c0 5 20 5 20 0V7m-20 8c0 5 20 5 20 0m-20 8c0 5 20 5 20 0"/></svg><b>Data Layer</b></div>
+          <div class="layer"><svg viewBox="0 0 32 32"><path d="M5 25V13l11-8 11 8v12H5zm7 0v-8h8v8"/><circle cx="23" cy="7" r="3"/></svg><b>Application Layer</b></div>
+          <div class="layer"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="4"/><path d="M16 3v5m0 16v5M3 16h5m16 0h5M7 7l4 4m10 10 4 4m0-18-4 4M11 21l-4 4"/></svg><b>Management Layer</b></div>
+        </div>
+        <div class="layernotes">
+          <ul style="--lc:#0875d0"><li>ยืนยันตัวอุปกรณ์</li><li>ป้องกันเฟิร์มแวร์</li><li>ลดบริการที่ไม่ใช้</li></ul>
+          <ul style="--lc:#00a98c"><li>เข้ารหัสสื่อสาร</li><li>แบ่งเครือข่าย (VLAN)</li><li>ใช้ Firewall</li></ul>
+          <ul style="--lc:#7045c7"><li>เข้ารหัสข้อมูล</li><li>ควบคุมการเข้าถึง</li><li>สำรองข้อมูล</li></ul>
+          <ul style="--lc:#f39412"><li>จัดการสิทธิ์ผู้ใช้</li><li>ตรวจสอบการใช้งาน</li><li>ป้องกัน Web Attack</li></ul>
+          <ul style="--lc:#0879d3"><li>อัปเดตระบบ</li><li>แจ้งเตือนและเฝ้าระวัง</li><li>ประเมินความเสี่ยง</li></ul>
+        </div>
+      </section>
+      <section class="panel best"><h2>☑ &nbsp;แนวทางปฏิบัติที่ดีที่สุด (Best Practices)</h2>
+        <ul class="practice"><li><span class="tick">✓</span>ออกแบบระบบให้ปลอดภัยตั้งแต่เริ่มต้น (Security by Design)</li><li><span class="tick">✓</span>ใช้มาตรฐานและโปรโตคอลที่ปลอดภัย</li><li><span class="tick">✓</span>อัปเดตซอฟต์แวร์และเฟิร์มแวร์สม่ำเสมอ</li><li><span class="tick">✓</span>กำหนดนโยบายการเข้าถึงที่ชัดเจน</li><li><span class="tick">✓</span>ตรวจสอบและเฝ้าระวังความผิดปกติต่อเนื่อง</li><li><span class="tick">✓</span>อบรมผู้ใช้งานให้ตระหนักถึงความปลอดภัย</li></ul>
+      </section>
+      <section class="panel threats"><h2>⚠ &nbsp;ตัวอย่างภัยคุกคามที่พบบ่อย</h2>
+        <div class="threatlist"><div class="threat"><i>▣</i>การบุกรุกอุปกรณ์ (Device Takeover)</div><div class="threat"><i>◖</i>การดักฟังข้อมูล (Eavesdropping)</div><div class="threat"><i>✎</i>การปลอมแปลงข้อมูล (Data Tampering)</div><div class="threat"><i>✹</i>การโจมตีแบบ DDoS</div><div class="threat"><i>●</i>การเข้าถึงโดยไม่ได้รับอนุญาต</div></div>
+      </section>
+    </div>
+  </section>
+  <footer class="footer"><div class="footshield">✓</div><div class="footlabel">IoT ที่ปลอดภัย</div><div class="equation"><em>=</em> <b>ข้อมูลที่เชื่อถือได้</b><em>+</em><b>ระบบที่เสถียร</b><em>+</em><b>ธุรกิจที่ยั่งยืน</b></div></footer>
+</main>
+</body></html>
